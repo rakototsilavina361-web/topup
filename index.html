@@ -1,17 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="mg">
 <head>
+  <meta charset="UTF-8">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <title>Top-Up Pro</title>
 </head>
 <body class="bg-gray-100 p-4">
-  <h1 class="text-2xl font-bold mb-4">Jeux Populaires</h1>
-  <div class="grid grid-cols-2 gap-4">
-    <div class="bg-white p-4 rounded-lg shadow">
-      <h2 class="font-bold">Free Fire</h2>
-      <button class="bg-blue-600 text-white w-full mt-2 rounded">Recharge</button>
-    </div>
+  <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow">
+    <h1 class="text-xl font-bold mb-4">Recharge Free Fire</h1>
+    
+    <input type="text" id="player_id" placeholder="ID Joueur" class="w-full border p-2 mb-2 rounded">
+    <input type="text" id="pseudo" placeholder="Pseudo" class="w-full border p-2 mb-2 rounded">
+    <button onclick="saveCommande()" class="bg-blue-600 text-white w-full p-2 rounded">Confirmer</button>
   </div>
+
+  <script>
+    // SOLOY IRETO IREO LAKILE SY URL ANAO
+    const SUPABASE_URL = 'https://kiqrvegbmypkoueglave.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_F65HfpbKfZsAdV-v9xDO6A_QVrlZSIM';
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function saveCommande() {
+      const p_id = document.getElementById('player_id').value;
+      const ps = document.getElementById('pseudo').value;
+
+      const { data, error } = await supabase.from('commandes').insert([
+        { player_id: p_id, pseudo: ps, status: 'miandry' }
+      ]);
+
+      if (error) {
+        alert('Nisy olana: ' + error.message);
+      } else {
+        alert('Tonga soa ny commande!');
+      }
+    }
+  </script>
 </body>
 </html>
-
