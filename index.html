@@ -2,6 +2,7 @@
 <html lang="mg">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <title>Top-Up Pro</title>
@@ -12,19 +13,25 @@
     
     <input type="text" id="player_id" placeholder="ID Joueur" class="w-full border p-2 mb-2 rounded">
     <input type="text" id="pseudo" placeholder="Pseudo" class="w-full border p-2 mb-2 rounded">
-    <button onclick="saveCommande()" class="bg-blue-600 text-white w-full p-2 rounded">Confirmer</button>
+    
+    <button type="button" id="btn-confirmer" class="bg-blue-600 text-white w-full p-2 rounded">Confirmer</button>
   </div>
 
   <script>
-    // SOLOY IRETO IREO LAKILE SY URL ANAO
+    // SOLOY IRETO LAKILE SY URL ANAO
     const SUPABASE_URL = 'https://kiqrvegbmypkoueglave.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_F65HfpbKfZsAdV-v9xDO6A_QVrlZSIM';
 
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    async function saveCommande() {
+    document.getElementById('btn-confirmer').addEventListener('click', async () => {
       const p_id = document.getElementById('player_id').value;
       const ps = document.getElementById('pseudo').value;
+
+      if (!p_id || !ps) {
+        alert('Fenoy daholo ny banga!');
+        return;
+      }
 
       const { data, error } = await supabase.from('commandes').insert([
         { player_id: p_id, pseudo: ps, status: 'miandry' }
@@ -35,7 +42,7 @@
       } else {
         alert('Tonga soa ny commande!');
       }
-    }
+    });
   </script>
 </body>
 </html>
