@@ -1,48 +1,35 @@
 <!DOCTYPE html>
-<html lang="mg">
+<html>
 <head>
-  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <title>Top-Up Pro</title>
 </head>
 <body class="bg-gray-100 p-4">
-  <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow">
-    <h1 class="text-xl font-bold mb-4">Recharge Free Fire</h1>
-    
-    <input type="text" id="player_id" placeholder="ID Joueur" class="w-full border p-2 mb-2 rounded">
-    <input type="text" id="pseudo" placeholder="Pseudo" class="w-full border p-2 mb-2 rounded">
-    
-    <button type="button" id="btn-confirmer" class="bg-blue-600 text-white w-full p-2 rounded">Confirmer</button>
+  <div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+    <input type="text" id="pid" placeholder="ID Joueur" class="w-full border p-2 mb-2">
+    <input type="text" id="pse" placeholder="Pseudo" class="w-full border p-2 mb-2">
+    <button onclick="sendData()" class="bg-blue-600 text-white w-full p-3 rounded">Confirmer</button>
   </div>
 
   <script>
-    // SOLOY IRETO LAKILE SY URL ANAO
-    const SUPABASE_URL = 'https://kiqrvegbmypkoueglave.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_F65HfpbKfZsAdV-v9xDO6A_QVrlZSIM';
+    const supabase = supabase.createClient('https://kiqrvegbmypkoueglave.supabase.co', 'sb_publishable_F65HfpbKfZsAdV-v9xDO6A_QVrlZSIM');
 
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    document.getElementById('btn-confirmer').addEventListener('click', async () => {
-      const p_id = document.getElementById('player_id').value;
-      const ps = document.getElementById('pseudo').value;
-
-      if (!p_id || !ps) {
-        alert('Fenoy daholo ny banga!');
-        return;
-      }
-
-      const { data, error } = await supabase.from('commandes').insert([
-        { player_id: p_id, pseudo: ps, status: 'miandry' }
+    async function sendData() {
+      const p_id = document.getElementById('pid').value;
+      const ps = document.getElementById('pse').value;
+      
+      // Efa namboarina ho 'Comandes' araka ny anarana ao amin'ny Supabase
+      const { data, error } = await supabase.from('Comandes').insert([
+        { player_id: p_id, pseudo: ps }
       ]);
-
+      
       if (error) {
-        alert('Nisy olana: ' + error.message);
+        alert('Diso ny zavatra iray: ' + error.message);
       } else {
         alert('Tonga soa ny commande!');
       }
-    });
+    }
   </script>
 </body>
 </html>
