@@ -1,33 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body class="bg-gray-100 p-4">
-  <div class="max-w-md mx-auto bg-white p-6 rounded shadow">
-    <input type="text" id="pid" placeholder="ID Joueur" class="w-full border p-2 mb-2">
-    <input type="text" id="pse" placeholder="Pseudo" class="w-full border p-2 mb-2">
-    <button onclick="sendData()" class="bg-blue-600 text-white w-full p-3 rounded">Confirmer</button>
-  </div>
+<body>
+  <input type="text" id="pid" placeholder="ID Joueur">
+  <input type="text" id="pse" placeholder="Pseudo">
+  <button id="btn" onclick="mitahiry()">Confirmer</button>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const supabase = supabase.createClient('https://kiqrvegbmypkoueglave.supabase.co', 'sb_publishable_F65HfpbKfZsAdV-v9xDO6A_QVrlZSIM');
 
-    async function sendData() {
-      const p_id = document.getElementById('pid').value;
-      const ps = document.getElementById('pse').value;
-      
-      // Efa namboarina ho 'Comandes' araka ny anarana ao amin'ny Supabase
-      const { data, error } = await supabase.from('Comandes').insert([
-        { player_id: p_id, pseudo: ps }
-      ]);
+    async function mitahiry() {
+      const pid = document.getElementById('pid').value;
+      const pse = document.getElementById('pse').value;
+      const { data, error } = await supabase.from('Comandes').insert([{ player_id: pid, pseudo: pse }]);
       
       if (error) {
-        alert('Diso ny zavatra iray: ' + error.message);
+        alert('Diso: ' + error.message);
       } else {
-        alert('Tonga soa ny commande!');
+        alert('Tonga soa!');
       }
     }
   </script>
